@@ -2,7 +2,9 @@ library(tidyverse)
 library(osmdata)
 library(leaflet)
 
-# available_tags("leisure")
+# OSM Sophox SPARQL query https://tinyurl.com/yymrk7ol
+# which doesn't return e.g. Uusi Sauna.
+# See https://github.com/Sophox/sophox/issues/27
 
 saunas <- getbb("Helsinki Finland") %>%
   opq() %>%
@@ -26,7 +28,7 @@ boxstyle <- list(
   "border-color" = "rgba(0,0,0,0.5)"
 ) 
 
-leaflet() %>% 
+m <- leaflet() %>% 
   addTiles() %>%
   addProviderTiles(providers$Stamen.TonerLines,
                    options = providerTileOptions(opacity = 0.85)) %>%
@@ -44,6 +46,5 @@ leaflet() %>%
                    label = ~saunas_proper_points$name,
                    labelOptions = labelOptions(noHide = T, direction = "bottom",
                                                style = boxstyle)) 
-  
 
-
+mapview::mapshot(m, file = "saunas.png")
