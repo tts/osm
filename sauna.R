@@ -7,6 +7,7 @@ library(leaflet)
 saunas <- getbb("Helsinki Finland") %>%
   opq() %>%
   add_osm_feature(key = "leisure", value = "sauna") %>%
+  add_osm_feature(key = "access", value = "!private") %>%
   osmdata_sf()
 
 # Some saunas are defined both with points and with polygons
@@ -26,15 +27,20 @@ boxstyle <- list(
 ) 
 
 leaflet() %>% 
-  addTiles(attribution = "OpenStreetMap contributors") %>% 
+  addTiles() %>%
+  addProviderTiles(providers$Stamen.TonerLines,
+                   options = providerTileOptions(opacity = 0.85)) %>%
   addPolygons(data = saunas$osm_polygons,
-              color = "red",
+              color = "black",
+              fillColor = "red",
               label = ~iconv(saunas$osm_polygons$name, from = "UTF-8", to = "ISO-8859-1"),
               labelOptions = labelOptions(noHide = T, direction = "bottom",
                                           style = boxstyle)) %>% 
   addCircleMarkers(data = saunas_proper_points,
-                   radius = 0.9,
-                   color = "red",
+                   radius = 5,
+                   color = "black",
+                   fillColor = "red",
+                   weight = 2,
                    label = ~saunas_proper_points$name,
                    labelOptions = labelOptions(noHide = T, direction = "bottom",
                                                style = boxstyle)) 
