@@ -54,24 +54,24 @@ make_plot <- function(data, place) {
   return(p)
 }
 
-places <- c("Helsinki Finland", "Jyväskylä Finland", "Oulu Finland", "Suomi Finland", "Illinois US")
+places <- c("Helsinki Finland", "Oulu Finland", "Suomi Finland", "Illinois US")
 d <- map(places, get_data)
 
 saveRDS(d, "tennisdata.RDS")
+d <- readRDS("tennisdata.RDS")
 
 geo <- purrr::map_depth(d, 1, function(x) {
   def_orientation(x$osm_polygons)
 })
 
 hki_p <- make_plot(geo[[1]], "Helsinki")
-jla_p <- make_plot(geo[[2]], "Jyväskylä")
-oulu_p <- make_plot(geo[[3]], "Oulu")
-fi_p <- make_plot(geo[[4]], "Suomi")
-il_p <- make_plot(geo[[5]], "Illinois USA")
+oulu_p <- make_plot(geo[[2]], "Oulu")
+fi_p <- make_plot(geo[[3]], "Suomi")
+il_p <- make_plot(geo[[4]], "Illinois USA")
 
-hki_p + jla_p + oulu_p + fi_p + il_p + plot_annotation(title = "Ulkotenniskenttien ilmansuunta",
+hki_p + oulu_p + fi_p + il_p + plot_annotation(title = "Ulkotenniskenttien ilmansuunta",
                                       caption = "data OSM | kuva @ttso")
 
-
+ggsave("tennis.png", width = 30, height = 20, dpi = 72, units = "cm", device = "png")
 
 
