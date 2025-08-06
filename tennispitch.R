@@ -58,7 +58,6 @@ places <- c("Helsinki Finland", "Oulu Finland", "Suomi Finland", "Illinois US")
 d <- map(places, get_data)
 
 saveRDS(d, "tennisdata.RDS")
-d <- readRDS("tennisdata.RDS")
 
 geo <- purrr::map_depth(d, 1, function(x) {
   def_orientation(x$osm_polygons)
