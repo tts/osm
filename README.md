@@ -1,3 +1,3 @@
 # osm
 
-Various map renderings from the OpenStreetMap data.
+Various plots and map renderings from the OpenStreetMap data.
