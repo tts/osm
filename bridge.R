@@ -22,8 +22,8 @@ data$osm_lines <- data$osm_lines %>%
   filter(!osm_id %in% discard_these)
 
 m <- leaflet() %>% 
-  setView(lat = 65, #.96895,
-          lng = 26, #82192,
+  setView(lat = 65,
+          lng = 26, 
           zoom = 5) %>% 
   addTiles() %>% 
   addProviderTiles(providers$OpenStreetMap.HOT) %>% 
